@@ -23,7 +23,7 @@ module.exports = {
         ? 'https://placedog.net/300/300'
         : 'http://placekitten.com/300/300'
     },
-    user: (pet, __, {models}) => {
+    owner: (pet, __, {models}) => {
       if (pet.name === "dog") return models.User.findOne()
     }
   },

@@ -23,7 +23,7 @@ const typeDefs = gql`
     name: String!
     type: String!
     img: String
-    user: User
+    owner: User
   }
   
   interface Shoe {
