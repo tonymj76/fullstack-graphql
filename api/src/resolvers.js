@@ -10,8 +10,8 @@ module.exports = {
     user: (_, __, {models}) => models.User.findOne(),
     pets: (_, __, {models}) => models.Pet.findMany(Boolean),
     shoes: (_, {input}) => ([
-      {id: "1", name: "Nike", size: "HH"},
-      {id: "1", name: "Adidas", size: 34}
+      {id: "1", name: "Nike", size: "HH", sport: "blue sport"},
+      {id: "1", name: "Nike", size: "MM", hasHills: true}
     ].filter(shoe => shoe.name === input.name))
   },
   Mutation: {
@@ -22,9 +22,22 @@ module.exports = {
       return pet.type === 'DOG'
         ? 'https://placedog.net/300/300'
         : 'http://placekitten.com/300/300'
+    },
+    user: (pet, __, {models}) => {
+      if (pet.name === "dog") return models.User.findOne()
     }
   },
-  // User: {
-  //
-  // }
+  Shoe: {
+    __resolveType(shoe){
+      if (shoe.sport) return "Sneakers"
+      return "Boot"
+    }
+  },
+
+  User: {
+    pets(user, __, {models}) {
+      console.log(user)
+      return models.Pet.findMany(Boolean)
+    }
+  }
 }
